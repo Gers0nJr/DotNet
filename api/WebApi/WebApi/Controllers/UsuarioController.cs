@@ -18,9 +18,38 @@ namespace WebApi.Controllers
 
         [Route("")]
         [HttpGet]
-        public ActionResult ListarTodos()
-        {
+        public ActionResult findAll() {
             return Ok(_context.Usuario);
+        }
+
+        [Route("{id}")]
+        [HttpGet]
+        public ActionResult findById(int id) {
+            return Ok(_context.Usuario.Find(id));
+        }
+
+        [Route("")]
+        [HttpPost]
+        public ActionResult create([FromBody] Usuarios usuarios) {
+            _context.Usuario.Add(usuarios);
+            _context.SaveChanges();
+            return Ok();
+        }
+
+        [Route("{id}")]
+        [HttpPut]
+        public ActionResult update(int id, [FromBody] Usuarios usuarios) {
+            _context.Usuario.Update(usuarios);
+            _context.SaveChanges();
+            return Ok();
+        }
+
+        [Route("{id}")]
+        [HttpDelete]
+        public ActionResult delete(int id) {
+            _context.Usuario.Remove(_context.Usuario.Find(id));
+            _context.SaveChanges();
+            return Ok();
         }
 
     }
